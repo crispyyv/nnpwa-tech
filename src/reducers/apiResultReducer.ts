@@ -38,6 +38,6 @@ export const apiResultReducer = (
         },
       };
     default:
-      return { ...state };
+      return state;
   }
 };

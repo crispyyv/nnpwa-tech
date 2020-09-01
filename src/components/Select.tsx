@@ -1,31 +1,59 @@
 import React, { ChangeEvent, FormEvent, useState } from "react";
 
 interface SelectProps {
-  getData(name: string): void;
+  getData(name: string, pages: number): void;
 }
 
 const apisName = ["News", "Newest", "Ask", "Show", "Jobs"];
-
+const apisInfo = [
+  {
+    name: "News",
+    maxPage: 10,
+  },
+  {
+    name: "Newest",
+    maxPage: 12,
+  },
+  {
+    name: "Ask",
+    maxPage: 2,
+  },
+  {
+    name: "Show",
+    maxPage: 2,
+  },
+  {
+    name: "Jobs",
+    maxPage: 1,
+  },
+];
 export const Select: React.FC<SelectProps> = ({ getData }) => {
-  const [apiName, setApiName] = useState("");
+  const [curentApi, setCurentApi] = useState({
+    name: "news",
+    maxPage: "10",
+  });
 
   const updateApiName = (e: ChangeEvent<HTMLSelectElement>) => {
-    setApiName(e.target.value);
+    setCurentApi({
+      name: e.target.value,
+      maxPage: e.target.options[e.target.selectedIndex].dataset.maxpage,
+    });
   };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    getData(apiName.toLowerCase());
-    setApiName("");
+    console.log(curentApi);
+    getData(curentApi.name.toLowerCase(), parseInt(curentApi.maxPage));
+    setCurentApi({ name: "", maxPage: null });
   };
 
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <select defaultValue={apiName} onChange={updateApiName}>
-          {apisName.map((n, idx) => (
-            <option key={idx} value={n}>
-              {n}
+        <select defaultValue={curentApi.name} onChange={updateApiName}>
+          {apisInfo.map((n, idx) => (
+            <option key={idx} value={n.name} data-maxpage={n.maxPage}>
+              {n.name}
             </option>
           ))}
         </select>
