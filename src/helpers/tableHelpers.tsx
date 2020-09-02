@@ -17,3 +17,27 @@ export const createLink = (link: string) => {
   if (link.match(URI_REGEXP)) return link;
   else return `https://news.ycombinator.com/${link}`;
 };
+
+export const sortByColumn = (
+  a: FeedItem,
+  b: FeedItem,
+  reverse: boolean,
+  time?: boolean
+) => {
+  if (time) {
+    if (new Date(a.time) < new Date(b.time)) return reverse ? -1 : 1;
+    if (new Date(a.time) > new Date(b.time)) return reverse ? 1 : -1;
+  } else {
+    if (a.title < b.title) return reverse ? -1 : 1;
+    if (a.title > b.title) return reverse ? 1 : -1;
+  }
+  return 0;
+};
+
+export const getFullTime = (timeString: number): string => {
+  return new Date(timeString).toLocaleTimeString();
+};
+
+export const sortByTime = (timeA: string, timeB: string) => {
+  console.log(new Date(timeA), new Date(timeB));
+};
