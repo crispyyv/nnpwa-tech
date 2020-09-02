@@ -15,6 +15,7 @@ export const Table: React.FC<TableProps> = ({ data, windowWidth }) => {
   const [reverse, setReverse] = useState({
     time: false,
     title: false,
+    domain: false,
   });
 
   const lastTableElement = useCallback(
@@ -45,7 +46,9 @@ export const Table: React.FC<TableProps> = ({ data, windowWidth }) => {
       };
     });
     console.log(reverse);
-    setCopiedData(copiedData.sort((a, b) => sortByColumn(a, b, reverse.title)));
+    setCopiedData(
+      copiedData.sort((a, b) => sortByColumn(a, b, reverse.title, "title"))
+    );
   };
   const handleSortByTime = () => {
     setReverse((prev) => {
@@ -55,7 +58,20 @@ export const Table: React.FC<TableProps> = ({ data, windowWidth }) => {
       };
     });
     setCopiedData(
-      copiedData.sort((a, b) => sortByColumn(a, b, reverse.time, true))
+      copiedData.sort((a, b) => sortByColumn(a, b, reverse.time, null, true))
+    );
+  };
+  const sortByDomain = () => {
+    setReverse((prev) => {
+      console.log(prev);
+      return {
+        ...prev,
+        domain: !prev.domain,
+      };
+    });
+    console.log(reverse);
+    setCopiedData(
+      copiedData.sort((a, b) => sortByColumn(a, b, reverse.domain, "domain"))
     );
   };
   return (
@@ -71,7 +87,9 @@ export const Table: React.FC<TableProps> = ({ data, windowWidth }) => {
             <th onClick={sortByTitle}>
               Title {reverse.title ? <p>&uarr;</p> : <p>&darr;</p>}
             </th>
-            <th>Domain</th>
+            <th onClick={sortByDomain}>
+              Domain {reverse.domain ? <p>&uarr;</p> : <p>&darr;</p>}
+            </th>
           </tr>
         </thead>
 

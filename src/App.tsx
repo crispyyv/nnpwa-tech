@@ -26,7 +26,7 @@ export const App = (props: HelloWorldProps) => {
       <Center>
         <h1 id="#top">Select name of API</h1>
         <Select getData={handleGetData} />
-        <hr />
+        <hr style={{ margin: "12px 0" }} />
         {dataState.loading ? (
           <Loader />
         ) : dataState.data ? (

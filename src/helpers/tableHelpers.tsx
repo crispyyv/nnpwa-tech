@@ -22,14 +22,15 @@ export const sortByColumn = (
   a: FeedItem,
   b: FeedItem,
   reverse: boolean,
+  column?: keyof FeedItem,
   time?: boolean
 ) => {
   if (time) {
     if (new Date(a.time) < new Date(b.time)) return reverse ? -1 : 1;
     if (new Date(a.time) > new Date(b.time)) return reverse ? 1 : -1;
   } else {
-    if (a.title < b.title) return reverse ? -1 : 1;
-    if (a.title > b.title) return reverse ? 1 : -1;
+    if (a[column] < b[column]) return reverse ? -1 : 1;
+    if (a[column] > b[column]) return reverse ? 1 : -1;
   }
   return 0;
 };
