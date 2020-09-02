@@ -8,5 +8,6 @@ export const MobileButton = styled.button`
     position: fixed;
     right: 10px;
     top: 35px;
+    padding: 5px;
   }
 `;
